@@ -286,7 +286,7 @@ function addWishToList(name, message, isNew) {
 
 /* ==================== MUSIC CONTROL ==================== */
 function initMusicControl() {
-  const audio = $("#musik-undangan");
+  const audio = $("#bgMusic");
   if (!audio) return;
 
   audio.volume = 0.3;
@@ -393,6 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }).catch((e) => console.error("Open log error", e));
   });
 });
+
 
 
 
