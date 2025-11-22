@@ -1,13 +1,4 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Weny & Syavic Wedding</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  </head>
-
-  <!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
@@ -23,10 +14,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  </-- simplyCountdown -->
+  <!-- simplyCountdown -->
   <link rel="stylesheet" href="countdown/circle.css" />
-  <script src="countdown/simplyCountdown.umd.js"></script>
-  <link url="https://script.google.com/macros/s/AKfycbyZbESEuPITmae3nI3-okmt5RP9eEVRzYAbU9q3aq2vNBxOJV-nSTFyy_vZIiBLsMEn/exec">
+ 
 
 </head>
 <body>
@@ -39,7 +29,7 @@
        SECTION: WELCOMING (opening)
        ======================= -->
   <section id="hero" class="page page-odd" data-page="hero">
-    <img class="bg-photo" src="images/background.jpg" alt="" aria-hidden="true">
+    <img class="bg-photo" src="images/background.jpg" alt="background" aria-hidden="true">
     <div class="bg-overlay" aria-hidden="true"></div>
 
     <div class="page-inner center">
@@ -325,8 +315,6 @@
   <a href="#wish"><span class="icon">💌</span><span class="label">Wish</span></a>
 </nav>
 
-    
-    </section>
 
   <!-- AUDIO -->
 <audio id="bgMusic" loop>
@@ -338,290 +326,6 @@
   <img id="musicIcon" src="images/logo-music.png" alt="Music Control">
 </div>
 
-<script>
-const music = document.getElementById("bgMusic");
-const openBtn = document.getElementById("openInviteBtn");
-const musicControl = document.getElementById("musicControl");
-const musicIcon = document.getElementById("musicIcon");
-
-let isPlaying = false;
-
-// Volume romantis
-music.volume = 0.3;
-
-// Musik mulai setelah klik "Buka Undangan"
-openBtn.addEventListener("click", () => {
-  music.play().then(() => {
-      isPlaying = true;
-  }).catch(err => console.log("Autoplay diblokir:", err));
-});
-
-// Fungsi tombol musik
-musicControl.addEventListener("click", () => {
-  if (isPlaying) {
-    music.pause();
-    musicIcon.style.opacity = "0.5";
-  } else {
-    music.play();
-    musicIcon.style.opacity = "1";
-  }
-  isPlaying = !isPlaying;
-});
-</script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    
-
-
-    <script src="countdown/simplyCountdown.umd.js"></script>
-    <script>
-      simplyCountdown('.simply-countdown-circle', {
-        year: 2025, // Target year (required)
-        month: 11, // Target month [1-12] (required)
-        day: 29, // Target day [1-31] (required)
-        hours: 9, // Target hour [0-23], default: 0
-        minutes: 0, // Target minute [0-59], default: 0
-        seconds: 0, // Target second [0-59], default: 0
-        words: { // Custom labels, with lambda for plurals
-            days: { root: 'hari', lambda: (root, n) => n > 1 ? root : root },
-            hours: { root: 'jam', lambda: (root, n) => n > 1 ? root : root },
-            minutes: { root: 'menit', lambda: (root, n) => n > 1 ? root : root },
-            seconds: { root: 'detik', lambda: (root, n) => n > 1 ? root : root }
-        }
-        
-    });
-
-    </script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const images = document.querySelectorAll(".grid-gallery img");
-
-  function revealOnScroll() {
-    const triggerPoint = window.innerHeight * 0.85;
-    images.forEach(img => {
-      const imgTop = img.getBoundingClientRect().top;
-      if (imgTop < triggerPoint) {
-        img.classList.add("visible");
-      }
-    });
-  }
-
-  revealOnScroll(); // jalankan saat load
-  window.addEventListener("scroll", revealOnScroll);
-});
-</script>
-
-<script>
-   const lightbox = document.getElementById("lightbox");
-  const lightboxImg = lightbox.querySelector("img");
-
-  document.querySelectorAll(".grid-gallery img").forEach(img => {
-    img.addEventListener("click", () => {
-      lightboxImg.src = img.src;
-      lightbox.classList.add("active");
-    });
-  });
-
-  // tutup jika klik area gelap
-  lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) {
-      lightbox.classList.remove("active");
-      lightboxImg.src = ""; // reset agar tidak terlihat
-    }
-     });
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const locSection = document.getElementById("location");
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        locSection.classList.add("visible");
-      }
-    });
-  }, { threshold: 0.2 });
-
-  observer.observe(locSection);
-});
-</script>
-
-<script>
-function createPetal() {
-  const petal = document.createElement("div");
-  petal.classList.add("petal");
-
-  // posisi random
-  petal.style.left = Math.random() * 100 + "vw";
-
-  // ukuran random
-  const size = Math.random() * 12 + 8; // 8–20px
-  petal.style.width = size + "px";
-  petal.style.height = size + "px";
-
-  // durasi jatuh random
-  petal.style.animationDuration = (Math.random() * 4 + 4) + "s";
-
-  document.body.appendChild(petal);
-
-  // hapus setelah jatuh
-  setTimeout(() => {
-    petal.remove();
-  }, 8000);
-}
-
-// generate terus
-setInterval(createPetal, 300);
-</script>
-
-<script>
-document.querySelectorAll(".copy-btn").forEach(btn => {
-  btn.addEventListener("click", function () {
-    const targetId = this.getAttribute("data-target");
-    const text = document.getElementById(targetId).innerText.trim();
-
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        this.innerText = "Copied!";
-        setTimeout(() => {
-          this.innerText = "Copy";
-        }, 1500);
-      })
-      .catch(err => {
-        console.error("Copy gagal:", err);
-      });
-  });
-});
-</script>
-
-<script>
-// =========================
-// NAMA UNDANGAN
-// =========================
-const urlParams = new URLSearchParams(window.location.search);
-const invitedName = urlParams.get("to") || "Tamu Undangan";
-
-document.getElementById("guestNameDisplay").textContent =
-  "Untuk: " + invitedName;
-
-// =========================
-// WEB APP URL GOOGLE SCRIPT
-// =========================
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyZbESEuPITmae3nI3-okmt5RP9eEVRzYAbU9q3aq2vNBxOJV-nSTFyy_vZIiBLsMEn/exec";
-
-// =========================
-// RSVP
-// =========================
-document.querySelectorAll(".btn-rsvp").forEach(btn => {
-  btn.addEventListener("click", () => {
-
-    fetch(WEBAPP_URL, {
-      method: "POST",
-      body: JSON.stringify({
-        mode: "rsvp",
-        name: invitedName,
-        status: btn.dataset.status
-      })
-    });
-
-    btn.innerText = "Terkirim ✓";
-  });
-});
-
-// =========================
-// KIRIM UCAPAN
-// =========================
-document.getElementById("wishSend").addEventListener("click", () => {
-  const message = document.getElementById("wishText").value.trim();
-  if (!message) return;
-
-  fetch(WEBAPP_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      mode: "wish",
-      name: invitedName,
-      message: message
-    })
-  });
-
-  addWishToList(invitedName, message);
-  document.getElementById("wishText").value = "";
-});
-
-// =========================
-// TAMPILKAN UCAPAN
-// =========================
-function addWishToList(name, message) {
-  const list = document.getElementById("wishList");
-  const item = document.createElement("div");
-  item.className = "wish-item fade-in";
-
-  item.innerHTML = `
-    <strong>${name}</strong>
-    <p>${message}</p>
-  `;
-
-  list.prepend(item);
-}
-</script>
-
-<script>
-// Fungsi untuk membuat huruf awal setiap kata menjadi kapital
-function formatName(name) {
-    return name
-        .toLowerCase()
-        .split(" ")
-        .filter(word => word.trim() !== "")
-        .map(word => word[0].toUpperCase() + word.substring(1))
-        .join(" ");
-}
-
-// Ambil parameter "to"
-const params = new URLSearchParams(window.location.search);
-let namaTamu = params.get("to");
-
-if (namaTamu && namaTamu.trim() !== "") {
-    namaTamu = decodeURIComponent(namaTamu);
-
-    // Format nama tamu otomatis
-    const formattedName = formatName(namaTamu);
-
-    // Masukkan ke HTML
-    document.getElementById("guest-name").innerText = formattedName;
-
-    // Hilangkan kata "Terhormat"
-    document.getElementById("guest-secondname").style.display = "none";
-} else {
-    // Jika tanpa parameter → tampil default
-    document.getElementById("guest-name").innerText = "Tamu Undangan";
-    document.getElementById("guest-secondname").innerText = "Terhormat";
-}
-</script>
-
-<script>
-document.getElementById("btn-open").addEventListener("click", function() {
-   document.getElementById("bottom-nav").classList.add("show");
-});
-</script>
-
-<script>
-document.getElementById("openInviteBtn").addEventListener("click", function () {
-
-    // Tampilkan sticky nav
-    const bottomNav = document.querySelector(".bottom-nav");
-    if (bottomNav) bottomNav.classList.add("show-nav");
-
-    // Scroll otomatis ke section HOME
-    const home = document.getElementById("home");
-    if (home) {
-        home.scrollIntoView({ behavior: "smooth" });
-    }
-
-});
-</script>
-
-
-
+<script src="script.js"></script>
 </body>
+</html>
