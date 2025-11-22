@@ -1,18 +1,5 @@
-/* ==============================================================
-   Weni & Syavic Wedding JS - Ready Deploy Version (Verbose)
-   Author: Sapikzal Pratama / Custom
-   Description:
-   - Guest Name from URL -> Sheet
-   - RSVP -> Sheet
-   - Wish -> Sheet & Page
-   - Music -> Play on Open Invite
-   - Gallery, Lightbox, Petals
-   - Countdown & Calendar
-   - Copy Button Snackbar
-   ============================================================== */
-
-/* ==================== CONFIG ==================== */
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzIanxH6DTI9gV7H5i5k4AkG3rvP7GcqlcAjueMDwwLOlCkR2wPXTnBH6-r7ZMsDyEj/exec";
+const WEBAPP_URL =
+  "https://script.google.com/macros/s/AKfycbyUCN0Yk4eGai9tKTKjbkvDVTHjYklsBQ-JHKyird722o2LgduZcKMdblzN86Nnq0SI/exec";
 
 /* ==================== HELPER FUNCTIONS ==================== */
 const $ = (selector) => document.querySelector(selector);
@@ -21,7 +8,7 @@ const log = (...args) => console.debug("[WeniSyavic]", ...args);
 
 /**
  * Escape HTML entities to prevent XSS
- * @param {string} s 
+ * @param {string} s
  * @returns {string}
  */
 function escapeHtml(s) {
@@ -44,26 +31,31 @@ function initGuestName() {
         .filter((w) => w.trim())
         .map((w) => w[0].toUpperCase() + w.slice(1))
         .join(" ");
+
     const guestName = guestRaw.trim() ? formatName(guestRaw) : "Tamu Undangan";
 
+    // Pakai helper DOM
     const el1 = $("#guest-name");
     const el2 = $("#guest-secondname");
+
     if (el1) el1.textContent = guestName;
     if (el2) el2.style.display = guestRaw.trim() ? "none" : "";
 
+    // simpan global
     window.invitedName = guestName;
     log("Guest name initialized:", guestName);
 
-    // Send guest name to Sheet
-    if (guestRaw.trim()) {
-      fetch(WEBAPP_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mode: "guestName", name: guestName }),
-      })
-        .then((res) => log("Guest name sent to sheet:", res.status))
-        .catch((err) => console.error("Guest name send error:", err));
-    }
+    // kirim ke sheet
+    fetch(WEBAPP_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mode: "guestName",
+        name: guestName,
+      }),
+    })
+      .then((res) => log("Guest name sent to sheet:", res.status))
+      .catch((err) => console.error("Guest name send error:", err));
   } catch (e) {
     console.error("initGuestName error", e);
     window.invitedName = "Tamu Undangan";
@@ -166,7 +158,9 @@ function initCopyBtns() {
   $$(".copy-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const id = btn.dataset.target;
-      const text = id ? (document.getElementById(id)?.innerText || "").trim() : "";
+      const text = id
+        ? (document.getElementById(id)?.innerText || "").trim()
+        : "";
       if (!text) return showSnackbar("Tidak ada nomor");
       navigator.clipboard
         ?.writeText(text)
@@ -182,26 +176,44 @@ function initCopyBtns() {
 
 /* ==================== RSVP ==================== */
 function initRsvp() {
-  document.querySelectorAll(".btn-rsvp").forEach((btn) => {
+  document.querySelectorAll(".rsvp-buttons .btn-rsvp").forEach((btn) => {
     btn.addEventListener("click", async () => {
-      const status = btn.dataset.status;
+      const status = btn.dataset.status; // "Hadir" atau "Tidak Hadir"
+      const name = window.invitedName || "Tamu Undangan";
+
       try {
         btn.disabled = true;
+
         const payload = {
           mode: "rsvp",
-          name: window.invitedName || "Tamu Undangan",
-          status,
+          name: name,
+          status: status,
         };
+
         log("RSVP payload:", payload);
+
         const res = await fetch(WEBAPP_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+
         log("RSVP response:", res.status);
+
+        const rsvpResult = document.getElementById("rsvpResult");
+        if (rsvpResult) {
+          rsvpResult.textContent = "Konfirmasi berhasil terkirim ✓";
+        }
+
         btn.innerText = "Terkirim ✓";
       } catch (e) {
         console.error("RSVP error", e);
+
+        const rsvpResult = document.getElementById("rsvpResult");
+        if (rsvpResult) {
+          rsvpResult.textContent = "Gagal mengirim konfirmasi ❌";
+        }
+
         btn.innerText = "Gagal ❌";
         btn.disabled = false;
       }
@@ -255,7 +267,9 @@ function loadWishes() {
     .then((res) => res.json())
     .then((data) => {
       list.innerHTML = "";
-      data.reverse().forEach((row) => addWishToList(row.name, row.message, false));
+      data
+        .reverse()
+        .forEach((row) => addWishToList(row.name, row.message, false));
     })
     .catch((err) => console.error("Load wishes error:", err));
 }
@@ -279,8 +293,11 @@ function initMusicControl() {
   let isPlaying = false;
 
   $("#openInviteBtn")?.addEventListener("click", () => {
-    audio.play()
-      .then(() => { isPlaying = true; })
+    audio
+      .play()
+      .then(() => {
+        isPlaying = true;
+      })
       .catch((err) => console.warn("Audio play error:", err));
   });
 
@@ -302,7 +319,8 @@ function initGalleryReveal() {
   function revealOnScroll() {
     const trigger = window.innerHeight * 0.85;
     images.forEach((img) => {
-      if (img.getBoundingClientRect().top < trigger) img.classList.add("visible");
+      if (img.getBoundingClientRect().top < trigger)
+        img.classList.add("visible");
     });
   }
   revealOnScroll();
@@ -335,7 +353,7 @@ function initPetals() {
     const size = Math.random() * 12 + 8;
     petal.style.width = size + "px";
     petal.style.height = size + "px";
-    petal.style.animationDuration = (Math.random() * 4 + 4) + "s";
+    petal.style.animationDuration = Math.random() * 4 + 4 + "s";
     document.body.appendChild(petal);
     setTimeout(() => petal.remove(), 8000);
   }
@@ -358,8 +376,21 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#btn-open")?.addEventListener("click", () => {
     $("#bottom-nav")?.classList.add("show");
   });
+
   $("#openInviteBtn")?.addEventListener("click", () => {
     $(".bottom-nav")?.classList.add("show-nav");
     $("#home")?.scrollIntoView({ behavior: "smooth" });
+
+    // NEW: log ke sheet Ucapan
+    fetch(WEBAPP_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mode: "open",
+        name: window.invitedName || "Tamu Undangan",
+        status: "OPENED",
+      }),
+    }).catch((e) => console.error("Open log error", e));
   });
 });
+
