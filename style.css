@@ -574,7 +574,7 @@ body {
   text-align: right;
   height: 450px;
   /* sedikit diperkecil agar tidak terlalu lebar */
-  background: rgb(244, 200, 164, 0.75);
+  background: rgb(242, 231, 222, 0.5);
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }
@@ -1665,3 +1665,4 @@ body {
   width: 100%;
   height: 100%;
 }
+
