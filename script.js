@@ -62,40 +62,6 @@ function initGuestName() {
   }
 }
 
-/* ==================== COUNTDOWN ==================== */
-function updateCountdown() {
-  const target = new Date("2025-11-29T09:00:00+07:00");
-  const now = new Date();
-  const diff = target - now;
-
-  const el = $("#countdown");
-  if (!el) return;
-
-  if (diff <= 0) {
-    el.textContent = "Hari H";
-    return;
-  }
-
-  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const m = Math.floor((diff / (1000 * 60)) % 60);
-  const s = Math.floor((diff / 1000) % 60);
-
-  el.textContent = `${d} Hari ${h} Jam ${m} Menit ${s} Detik`;
-
-  const ct = $("#countdown-top");
-  if (ct) {
-    ct.innerHTML = `
-      <span>${String(d).padStart(2, "0")}</span> Hari
-      <span>${String(h).padStart(2, "0")}</span> Jam
-      <span>${String(m).padStart(2, "0")}</span> Menit
-      <span>${String(s).padStart(2, "0")}</span> Detik
-    `;
-  }
-}
-setInterval(updateCountdown, 1000);
-updateCountdown();
-
 /* ==================== CALENDAR (.ics) ==================== */
 function initCalendar() {
   $(".calendar-btn")?.addEventListener("click", (e) => {
@@ -393,6 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }).catch((e) => console.error("Open log error", e));
   });
 });
+
 
 
 
