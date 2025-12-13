@@ -48,12 +48,13 @@ function initGuestName() {
     // kirim ke sheet
     fetch(WEBAPP_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      mode: "no-cors",
       body: JSON.stringify({
-        mode: "guestName",
-        name: guestName,
+      mode: "guestName",
+      name: guestName,
       }),
     })
+
       .then((res) => log("Guest name sent to sheet:", res.status))
       .catch((err) => console.error("Guest name send error:", err));
   } catch (e) {
@@ -158,11 +159,12 @@ function initRsvp() {
 
         log("RSVP payload:", payload);
 
-        const res = await fetch(WEBAPP_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
+        await fetch(WEBAPP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(payload),
         });
+
 
         log("RSVP response:", res.status);
 
@@ -207,11 +209,12 @@ function initWishSend() {
     log("Wish payload:", payload);
 
     try {
-      const res = await fetch(WEBAPP_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      await fetch(WEBAPP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify(payload),
+    });
+
       log("Wish response:", res.status);
 
       addWishToList(window.invitedName, message, true);
@@ -230,14 +233,24 @@ function loadWishes() {
   if (!list) return;
 
   fetch(WEBAPP_URL)
-    .then((res) => res.json())
-    .then((data) => {
-      list.innerHTML = "";
-      data
-        .reverse()
-        .forEach((row) => addWishToList(row.name, row.message, false));
-    })
-    .catch((err) => console.error("Load wishes error:", err));
+  .then((res) => res.text())
+  .then((text) => {
+    const data = JSON.parse(
+      text.replace(/<[^>]*>?/gm, "")
+    );
+
+    if (!Array.isArray(data)) return;
+
+    const list = $("#wishList");
+    list.innerHTML = "";
+
+    data
+      .reverse()
+      .forEach((row) =>
+        addWishToList(row.name, row.message, false)
+      );
+  })
+  .catch((err) => console.error("Load wishes error:", err));
 }
 
 function addWishToList(name, message, isNew) {
@@ -350,15 +363,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // NEW: log ke sheet Ucapan
     fetch(WEBAPP_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      mode: "no-cors",
       body: JSON.stringify({
-        mode: "open",
-        name: window.invitedName || "Tamu Undangan",
-        status: "OPENED",
-      }),
-    }).catch((e) => console.error("Open log error", e));
+       mode: "open",
+       name: window.invitedName || "Tamu Undangan",
+       status: "OPENED",
+  }),
+})
+}).catch((e) => console.error("Open log error", e));
   });
 });
+
 
 
 
