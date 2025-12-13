@@ -1,5 +1,5 @@
 const WEBAPP_URL =
-  "https://script.google.com/macros/s/AKfycbzDWWftX9Pmdg0xAZx4CNpS5JI2nBgfwRtzfSOZ3-6lr4C1zvmDe2PAcgOQrVUWct1dQA/exec";
+  "https://script.google.com/macros/s/AKfycbwRwFk7KiSd4z_6VuCz_0-2r-AwLyUXYE6XMtCNlVJ6ZSytsHp68uHdtVGRtUUJXfksyw/exec";
 
 /* ==================== HELPER FUNCTIONS ==================== */
 const $ = (selector) => document.querySelector(selector);
@@ -359,6 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }).catch((e) => console.error("Open log error", e));
   });
 });
+
 
 
 
