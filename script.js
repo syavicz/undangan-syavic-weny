@@ -361,11 +361,8 @@ $("#btn-open")?.addEventListener("click", () => {
 
 $("#openInviteBtn")?.addEventListener("click", () => {
     $(".bottom-nav")?.classList.add("show-nav");
-    $("#home")?.scrollIntoView({
-        behavior: "smooth"
-    });
+    $("#home")?.scrollIntoView({ behavior: "smooth" });
 
-    // NEW: log ke sheet Ucapan
     fetch(WEBAPP_URL, {
         method: "POST",
         mode: "no-cors",
@@ -374,6 +371,5 @@ $("#openInviteBtn")?.addEventListener("click", () => {
             name: window.invitedName || "Tamu Undangan",
             status: "OPENED",
         }),
-    })
-}).catch((e) => console.error("Open log error", e));
+    }).catch((e) => console.error("Open log error", e));
 });
