@@ -382,5 +382,8 @@ $("#btn-open")?.addEventListener("click", () => {
             status: "OPENED",
         }),
     }).catch(console.error);
+  });
 });
+
+
 
