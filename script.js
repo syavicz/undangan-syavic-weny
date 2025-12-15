@@ -168,7 +168,7 @@ function initRsvp() {
                 });
 
 
-                log("RSVP response:", res.status);
+                log("RSVP response");
 
                 const rsvpResult = document.getElementById("rsvpResult");
                 if (rsvpResult) {
@@ -217,7 +217,7 @@ function initWishSend() {
                 body: JSON.stringify(payload),
             });
 
-            log("Wish response:", res.status);
+            log("Wish Sent");
 
             addWishToList(window.invitedName, message, true);
             ta.value = "";
@@ -356,13 +356,23 @@ initLightbox();
 initPetals();
 
 $("#btn-open")?.addEventListener("click", () => {
+    // tampilkan navigasi
     $("#bottom-nav")?.classList.add("show");
-});
-
-$("#openInviteBtn")?.addEventListener("click", () => {
     $(".bottom-nav")?.classList.add("show-nav");
-    $("#home")?.scrollIntoView({ behavior: "smooth" });
 
+    // scroll ke home
+    document.getElementById("home")?.scrollIntoView({
+        behavior: "smooth",
+    });
+
+    // play music
+    const audio = $("#bgMusic");
+    if (audio) {
+        audio.volume = 0.3;
+        audio.play().catch(() => {});
+    }
+
+    // log OPEN ke sheet
     fetch(WEBAPP_URL, {
         method: "POST",
         mode: "no-cors",
@@ -371,5 +381,6 @@ $("#openInviteBtn")?.addEventListener("click", () => {
             name: window.invitedName || "Tamu Undangan",
             status: "OPENED",
         }),
-    }).catch((e) => console.error("Open log error", e));
+    }).catch(console.error);
 });
+
