@@ -342,6 +342,24 @@ function initPetals() {
     setInterval(createPetal, 300);
 }
 
+/* ==================== BOTTOM NAV ON INPUT ==================== */
+function initBottomNavOnInput() {
+    const input =
+        document.querySelector("#namaUndangan") ||
+        document.querySelector("#wishText");
+
+    const nav = document.querySelector(".bottom-nav");
+    if (!input || !nav) return;
+
+    input.addEventListener("input", () => {
+        if (input.value.trim().length > 0) {
+            nav.classList.add("show-nav");
+        } else {
+            nav.classList.remove("show-nav");
+        }
+    });
+}
+
 /* ==================== INIT ON DOM READY ==================== */
 document.addEventListener("DOMContentLoaded", () => {
 initGuestName();
@@ -354,6 +372,7 @@ loadWishes();
 initGalleryReveal();
 initLightbox();
 initPetals();
+initBottomNavOnInput();
 
 $("#btn-open")?.addEventListener("click", () => {
     // tampilkan navigasi
@@ -384,6 +403,7 @@ $("#btn-open")?.addEventListener("click", () => {
     }).catch(console.error);
   });
 });
+
 
 
 
