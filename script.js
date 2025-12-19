@@ -8,7 +8,7 @@ const log = (...args) => console.debug("[WeniSyavic]", ...args);
 
 /**
  * Escape HTML entities to prevent XSS
- * @param {string} s
+ * @param {string} 
  * @returns {string}
  */
 function escapeHtml(s) {
@@ -403,6 +403,7 @@ $("#btn-open")?.addEventListener("click", () => {
     }).catch(console.error);
   });
 });
+
 
 
 
